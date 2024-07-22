@@ -2,14 +2,17 @@ import React, { Component } from "react";
 
 class ContactList extends Component {
   render() {
+    const { visibleContacts, removeContact } = this.props;
+
     return (
       <ul>
-        {this.props.visibleContacts.map(({ id, name, number }) => {
+        {visibleContacts.map(({ id, name, number }) => {
           return (
             <li key={id}>
               <p>
                 {name}: {number}
               </p>
+              <button onClick={() => removeContact(id)}>Delete</button>
             </li>
           );
         })}

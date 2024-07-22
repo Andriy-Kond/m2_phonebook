@@ -40,6 +40,12 @@ class App extends Component {
     // this.clearState();
   };
 
+  removeContact = id => {
+    this.setState({
+      contacts: this.state.contacts.filter(contact => contact.id !== id),
+    });
+  };
+
   handleFilter = e => this.setState({ filter: e.currentTarget.value });
 
   render() {
@@ -56,7 +62,10 @@ class App extends Component {
         <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
         <Filter filter={filter} handleFilter={this.handleFilter} />
-        <ContactList visibleContacts={visibleContacts} />
+        <ContactList
+          visibleContacts={visibleContacts}
+          removeContact={this.removeContact}
+        />
       </>
     );
   }
