@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# 2 - Книга контактів
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Напиши застосунок зберігання контактів телефонної книги.
 
-## Available Scripts
+## Крок 1
 
-In the project directory, you can run:
+Застосунок повинен складатися з форми і списку контактів. На поточному кроці реалізуй додавання імені контакту та відображення списку контактів. Застосунок не повинен зберігати контакти між різними сесіями (оновлення сторінки).
 
-### `npm start`
+Використовуйте цю розмітку інпуту для імені контакту.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    <input type="text" name="name" required />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Стан, що зберігається в батьківському компоненті <App>, обов'язково повинен бути наступного вигляду, додавати нові властивості не можна.
 
-### `npm test`
+    state = {
+      contacts: [],
+      name: ''
+    }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Кожен контакт повинен бути об'єктом з властивостями name та id. Для генерації ідентифікаторів використовуй будь-який відповідний пакет, наприклад nanoid. Після завершення цього кроку, застосунок повинен виглядати приблизно так.
+![alt text](image.png)
 
-### `npm run build`
+## Крок 2
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Розшир функціонал застосунку, дозволивши користувачам додавати номери телефонів. Для цього додай <input type="tel"> у форму і властивість для зберігання його значення в стані.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    state = {
+      contacts: [],
+      name: '',
+      number: ''
+    }
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Використовуй цю розмітку інпуту для номеру контакту.
 
-### `npm run eject`
+    <input type="tel" name="number" required />
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Після завершення цього кроку, застосунок повинен виглядати приблизно так.
+![alt text](image-1.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Крок 3
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Додай поле пошуку, яке можна використовувати для фільтрації списку контактів за ім'ям.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Поле пошуку – це інпут без форми, значення якого записується у стан (контрольований елемент).
+Логіка фільтрації повинна бути нечутливою до регістру.
 
-## Learn More
+    state = {
+      contacts: [],
+      filter: '',
+      name: '',
+      number: ''
+    }
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![alt text](step-3.gif)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Коли ми працюємо над новим функціоналом, буває зручно жорстко закодувати деякі дані у стан. Це позбавить необхідності вручну вводити дані в інтерфейсі для тестування роботи нового функціоналу. Наприклад, можна використовувати такий початковий стан.
 
-### Code Splitting
+    state = {
+      contacts: [
+        {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+        {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+        {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+        {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+      ],
+      filter: '',
+      name: '',
+      number: ''
+    }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Крок 4
 
-### Analyzing the Bundle Size
+Якщо твій застосунок реалізований в одному компоненті <App>, виконай рефакторинг, виділивши відповідні частини в окремі компоненти. У стані кореневого компонента <App> залишаться тільки властивості contacts і filter.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+    state = {
+      contacts: [],
+      filter: ''
+    }
 
-### Making a Progressive Web App
+Достатньо виділити чотири компоненти: форма додавання контактів, список контактів, елемент списку контактів та фільтр пошуку.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Після рефакторингу кореневий компонент застосунку виглядатиме так.
 
-### Advanced Configuration
+    <div>
+      <h1>Phonebook</h1>
+      <ContactForm ... />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+      <h2>Contacts</h2>
+      <Filter ... />
+      <ContactList ... />
+    </div>
 
-### Deployment
+## Крок 5
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Заборони користувачеві можливість додавати контакти, імена яких вже присутні у телефонній книзі. При спробі виконати таку дію виведи alert із попередженням.
+![alt text](image-2.png)
 
-### `npm run build` fails to minify
+## Крок 6
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Розшир функціонал застосунку, дозволивши користувачеві видаляти раніше збережені контакти.
+![alt text](step-6.gif)

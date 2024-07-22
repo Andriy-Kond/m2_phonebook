@@ -1,9 +1,7 @@
-
-
 function App() {
   return (
-    <div >
-      hi there gh-pages
+    <div>
+      <input type="text" name="name" required />
     </div>
   );
 }
