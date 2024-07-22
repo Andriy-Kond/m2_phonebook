@@ -21,15 +21,21 @@ class App extends Component {
     // const number = e.currentTarget.elements.number.value;
     const { name, number } = data;
 
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        contacts: [
-          ...prevState.contacts,
-          { id: nanoid(), name: name, number: number },
-        ],
-      };
+    const isExistContact = this.state.contacts.find(contact => {
+      return contact.name === name;
     });
+
+    isExistContact
+      ? alert(`Contact ${name} already in contact book`)
+      : this.setState(prevState => {
+          return {
+            ...prevState,
+            contacts: [
+              ...prevState.contacts,
+              { id: nanoid(), name: name, number: number },
+            ],
+          };
+        });
 
     // this.clearState();
   };
