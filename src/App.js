@@ -1,5 +1,5 @@
 function App() {
-  return <div></div>;
+  return <div>hi gh-pages</div>;
 }
 
 export default App;
