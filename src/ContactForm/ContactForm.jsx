@@ -1,54 +1,29 @@
-import { click } from "@testing-library/user-event/dist/click";
-import React, { Component } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-class ContactForm extends Component {
-  state = { name: "sss", number: "" };
+const initialValues = { name: "", number: "" };
 
-  handleContact = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
+const ContactForm = ({ addContact }) => {
+  const handleSubmit = (values, actions) => {
+    addContact(values);
+    actions.resetForm();
   };
 
-  clearState = () => {
-    this.setState({ name: "", number: "" });
-  };
-
-  handleAddContact = e => {
-    e.preventDefault();
-
-    this.props.addContact(this.state);
-    this.clearState();
-  };
-
-  render() {
-    const { name, number } = this.state;
-
-    return (
-      <form onSubmit={this.handleAddContact}>
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Form>
         <label>
           Name
-          <input
-            type="text"
-            name="name"
-            required
-            value={name}
-            onChange={this.handleContact}
-          />
+          <Field type="text" name="name" required />
         </label>
 
         <label>
           Telephone
-          <input
-            type="tel"
-            name="number"
-            required
-            value={number}
-            onChange={this.handleContact}></input>
+          <Field type="tel" name="number" required />
         </label>
         <button type="submit">Add contact</button>
-      </form>
-    );
-  }
-}
+      </Form>
+    </Formik>
+  );
+};
 
 export default ContactForm;

@@ -5,7 +5,7 @@ class Filter extends Component {
     const { filter, handleFilter } = this.props;
     return (
       <label>
-        Filter here
+        Filter contacts here
         <input type="text" value={filter} onChange={handleFilter} />
       </label>
     );

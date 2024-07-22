@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { nanoid } from "nanoid";
-import ContactForm from "ContactForm";
+import ContactForm from "./ContactForm/ContactForm";
 import Filter from "Filter";
 import ContactList from "ContactList";
 
@@ -20,31 +20,26 @@ class App extends Component {
     // const name = e.currentTarget.elements.name.value;
     // const number = e.currentTarget.elements.number.value;
     const { name, number } = data;
+    const newContact = { id: nanoid(), name, number };
 
-    const isExistContact = this.state.contacts.find(contact => {
-      return contact.name === name;
-    });
+    const isExistContact = this.state.contacts.find(
+      contact => contact.name === name,
+    );
 
     isExistContact
       ? alert(`Contact ${name} already in contact book`)
-      : this.setState(prevState => {
-          return {
-            ...prevState,
-            contacts: [
-              ...prevState.contacts,
-              { id: nanoid(), name: name, number: number },
-            ],
-          };
-        });
+      : this.setState(prevState => ({
+          ...prevState,
+          contacts: [...prevState.contacts, newContact],
+        }));
 
     // this.clearState();
   };
 
-  removeContact = id => {
+  removeContact = id =>
     this.setState({
       contacts: this.state.contacts.filter(contact => contact.id !== id),
     });
-  };
 
   handleFilter = e => this.setState({ filter: e.currentTarget.value });
 
@@ -56,10 +51,9 @@ class App extends Component {
 
     return (
       <>
-        {/* 
-        <ContactList ... /> */}
         <h1>Phonebook</h1>
         <ContactForm addContact={this.addContact} />
+
         <h2>Contacts</h2>
         <Filter filter={filter} handleFilter={this.handleFilter} />
         <ContactList
