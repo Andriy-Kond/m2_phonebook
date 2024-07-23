@@ -1,4 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { object, string, number } from "yup";
+
+const shema = object({
+  name: string().required(),
+  number: number().required().positive().integer(),
+});
 
 const initialValues = { name: "", number: "" };
 
@@ -9,16 +15,21 @@ const ContactForm = ({ addContact }) => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={shema}>
       <Form>
         <label>
           Name
-          <Field type="text" name="name" required />
+          <Field type="text" name="name" />
+          <ErrorMessage name="name" component="div" />
         </label>
 
         <label>
           Telephone
-          <Field type="tel" name="number" required />
+          <Field type="tel" name="number" />
+          <ErrorMessage name="number" component="div" />
         </label>
         <button type="submit">Add contact</button>
       </Form>
