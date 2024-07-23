@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string, number } from "yup";
+import { Button, Span } from "./ContactForm.styled";
 
 const shema = object({
   name: string().required(),
@@ -31,7 +32,9 @@ const ContactForm = ({ addContact }) => {
           <Field type="tel" name="number" />
           <ErrorMessage name="number" component="div" />
         </label>
-        <button type="submit">Add contact</button>
+        <Button type="submit">
+          <Span>Add contact</Span>
+        </Button>
       </Form>
     </Formik>
   );
